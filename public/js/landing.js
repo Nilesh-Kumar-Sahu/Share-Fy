@@ -12,8 +12,8 @@ const copyBtn = document.querySelector('#copyBtn');
 const toast = document.querySelector('.toast');
 
 // const host = 'https://share-fy.herokuapp.com/';
-const host = 'https://share-fy.herokuapp.com/';
-// const host = 'http://127.0.0.1:5000/';
+// const host = 'https://share-fy.herokuapp.com/';
+const host = 'http://127.0.0.1:5000/';
 
 const uploadURL = `${host}api/files`;
 const emailURL = `${host}api/files/send`;

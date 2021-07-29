@@ -26,7 +26,7 @@ exports.Connect = mongoose
 
 // Get all records older than 24 hours
 const DeleteData = async () => {
-  const pastDate = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const pastDate = new Date(Date.now() - 20 * 60 * 1000);
   const files = await File.find({ createdAt: { $lt: pastDate } });
 
   if (files.length) {

@@ -44,7 +44,9 @@ exports.uploadFile = async (req, res, next) => {
     const response = await file.save();
 
     // Response->link
-    res.json({ file: `${process.env.APP_BASE_URL}/files/${response.uuid}` });
+    res.json({
+      file: `${process.env.APP_BASE_URL}/files/${response.uuid}`,
+    });
     // After above code link will show like this in the url bar
     // http://localhost:3000/files/54253gehwgdhsb-gdjcbj
   } catch (err) {
