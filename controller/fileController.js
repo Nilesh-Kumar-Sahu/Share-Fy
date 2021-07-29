@@ -1,5 +1,6 @@
 const multer = require('multer');
 const short = require('short-uuid');
+const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
 const sendMail = require('../services/mailService');
