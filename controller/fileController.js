@@ -11,10 +11,11 @@ let storageEng = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'),
 
   filename: (req, file, cb) => {
-    const ext = file.mimetype.split('/')[1];
+    // console.log(path.extname(file.originalname));
+    const ext = path.extname(file.originalname);
     const uniqueName = `user_${short.generate()}-${Math.round(
       Math.random() * 1e9
-    )}.${ext}`;
+    )}${ext}`;
     //uniqueName- user_8ty5xQzehm3s3agePuHYqH-81553491.jpeg
 
     cb(null, uniqueName);
