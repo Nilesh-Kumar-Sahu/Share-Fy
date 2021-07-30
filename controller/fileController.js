@@ -49,8 +49,6 @@ exports.uploadFile = async (req, res, next) => {
     res.json({
       file: `${process.env.APP_BASE_URL}/files/${response.uuid}`,
     });
-    // After above code link will show like this in the url bar
-    // http://localhost:3000/files/54253gehwgdhsb-gdjcbj
   } catch (err) {
     res.status(400).json({
       status: 'fail',
@@ -90,7 +88,7 @@ exports.sendMail = async (req, res) => {
     // Get data from db
     const file = await File.findOne({ uuid: uuid });
 
-    // This if(file.sender) condition checks if the senders email is used only one time
+    // This if(file.sender) condition checks if the senders email is used only one time -- can be checked only through API intracting tools (POSTMAN)
     // if (file.sender) {
     //   return res.status(422).send({ error: 'Email already sent...' });
     // }
@@ -126,23 +124,3 @@ exports.sendMail = async (req, res) => {
       .send({ error: 'Something went wrong in fileController.' });
   }
 };
-
-/*
-The HyperText Transfer Protocol (HTTP) 422 Unprocessable Entity response status code indicates that 
-the server understands the content type of the request entity, and the syntax of the request entity is correct, 
-but it was unable to process the contained instructions
-
-
-
-
-
-http://localhost:5000/files/e2d801e3-ccbe-4965-acbe-f343591f821d?source=email
-*/
-
-/*
-{
-  "uuid":"5cc6da23-e3d9-450c-8a99-ed8e53da5a08",
-  "emailTo":"nileshkr786@gmail.com",
-  "emailFrom":"test1@gmail.com"
-}
-*/

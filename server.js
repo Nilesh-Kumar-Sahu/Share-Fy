@@ -24,15 +24,15 @@ exports.Connect = mongoose
     console.log('DB connection successful!!!');
   });
 
-// Get all records older than 24 hours
+// Delete all records older than 24 hours
 const DeleteData = async () => {
-  const pastDate = new Date(Date.now() - 20 * 60 * 1000);
+  const pastDate = new Date(Date.now() - 24 * 60 * 60 * 1000);
   const files = await File.find({ createdAt: { $lt: pastDate } });
 
   if (files.length) {
     for (const each_file of files) {
       try {
-        // fs.unlinkSync(each_file.path);
+        fs.unlinkSync(each_file.path);
         await each_file.remove();
         console.log(`successfully deleted ${each_file.filename}`);
       } catch (err) {
@@ -45,7 +45,6 @@ const DeleteData = async () => {
 
 DeleteData().then(() => {
   console.log('Removed files older than 24 hours!!');
-  // process.exit();
 });
 
 const port = process.env.PORT || 3000;
