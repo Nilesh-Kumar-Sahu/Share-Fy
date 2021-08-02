@@ -1,0 +1,18 @@
+extends baseEmail
+
+block content
+  p Hi there,
+  p #{emailFrom} has shared a file with you.
+  p File size: #{size} in total.
+  table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+    tbody
+      tr
+        td(align='left')
+          table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+              tr
+                td
+                  a(href=`${url}`, target='_blank') Downlad File
+  p The link expires in 24 hours. So make sure to download within 24 hours.
+  p Thank You for using our services ❤
+  p Good luck! Have a nice day. 

@@ -3,8 +3,8 @@ const short = require('short-uuid');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-const sendMail = require('../services/mailService');
 const File = require('../models/fileModel');
+const Email = require('../utils/email');
 
 // Set Storage Engine
 let storageEng = multer.diskStorage({
@@ -75,7 +75,6 @@ exports.uploadFile = async (req, res, next) => {
 */
 
 // =====================================================================
-// Sending Mail
 exports.sendMail = async (req, res) => {
   const { uuid, emailTo, emailFrom } = req.body;
 
@@ -93,27 +92,18 @@ exports.sendMail = async (req, res) => {
     //   return res.status(422).send({ error: 'Email already sent...' });
     // }
 
+    // Saving the reciever and sender email in database
     file.sender = emailFrom;
     file.receiver = emailTo;
 
-    // Save in the database
-    const response = await file.save();
+    await file.save();
 
-    sendMail
-      .mailService({
-        from: emailFrom,
-        to: emailTo,
-        subject: 'Alert! a file has been shared with you 😃',
-        text: `${emailFrom} shared a file with you.`,
-        html: require('../services/emailTemplate')({
-          emailFrom: emailFrom,
-          downloadLink: `${process.env.APP_BASE_URL}/files/download/${file.uuid}`,
-          size: parseInt(file.size / 1000) + ' KB',
-          expires: '24 hours',
-        }),
-      })
+    // Sending Email
+    const url = `${process.env.APP_BASE_URL}/files/download/${file.uuid}`;
+    await new Email(file, url)
+      .sendMail()
       .then(() => {
-        return res.json({ success: true });
+        return res.status(200).json({ success: true });
       })
       .catch((err) => {
         return res.status(500).json({ error: 'Error in email sending.' });
