@@ -1,53 +1,16 @@
-doctype html
-html
-  head
-      meta(charset='UTF-8')
-      meta(name='viewport' content='width=device-width, initial-scale=1.0')
-      link(rel='stylesheet' href='/css/style.css')
-      link(rel='shortcut icon' type='image/x-icon' href='/favicon.ico')
-      link(rel='stylesheet' href='https://pro.fontawesome.com/releases/v5.10.0/css/all.css' integrity='sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p' crossorigin='anonymous')
-      title Share-Fy
+include _header
+  title Share-Fy
   
   body
-    section.upload-container
-        .drop-zone
-            .icon-container
-                img.center(src='img/upload.svg' alt='file icon' draggable='false')
-                img.left(src='img/upload.svg' alt='file icon' draggable='false')
-                img.right(src='img/upload.svg' alt='file icon' draggable='false')
+    //- Header
+    include _navbar
 
-            input#fileinput(type='file')
-            .title Drop your files here or 
-                span.browsebtn browse
+    //- Showcase
+    include showcase
 
-        .sharing-container
-            p.expire(style='margin-bottom:0') Link expires in 24 hrs!
-            p.expire Copy and share it!
+    .container.py-5
+        .d-flex.justify-content-center
+            include upload_container
 
-            .input-container
-                input(type='text' value ='' id='fileURL' readonly)
-                img#copyBtn(src='img/copy-icon.svg' alt='copy icon')
-            
-            p or Send via email
-                .email-container
-                    form#emailform
-                        .field 
-                            label(for='receiver') Your email
-                            input#sender(type='email' required name='from-email')
-                        .field
-                            label(for='receiver') Receiver's email
-                            input#receiver(type='email' required name='to-email')
-                        
-                        button.sendBtn(type='submit')
-                            i#hide.loading-icon.fa.fa-spinner.fa-spin
-                            span.btn-txt Send
-    
-    //- Linkedin Link
-    a(href='https://www.linkedin.com/in/nilesh-kumar-408a91163/' target='_blank'  aria-label='Connect with me')
-      img.linkedin-icon(src='/img/linkedin-icon.svg' alt='share-fy-download')      
-
-    .upload-vector
-    .toast Welcome
-
-    //- script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
-    script(src='/js/landing.js') 
+    //- FOOTER
+    include _footer

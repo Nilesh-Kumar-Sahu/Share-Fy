@@ -1,86 +1,21 @@
-:root {
-  --main-bg-color: #abb8b7;
-  --border-color: #fa49b681;
-  --light-blue: #03a9f4;
-  --toast-color: #000000;
-  --dark-blue: #028bca;
-  --container-width: 500px;
+.navbar,
+.__brand {
+  font-size: 1.5rem;
 }
 
-body,
-html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background: var(--main-bg-color);
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-}
-
-/* body {
-  font-family: system-ui;
-  background: var(--main-bg-color);
-  height: 98vh;
-  overflow: hidden;
+body {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-} */
-
-.logo {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 150px;
+  flex-direction: column;
+  height: 100vh;
 }
-section.download {
-  background: #fff;
-  width: 430px;
-  max-width: 90%;
+
+/* Landing */
+.upload-container {
+  background: #ffffff;
   border-radius: 25px;
-  box-shadow: 0px 20px 20px 0px #00000017;
-  padding: 2rem;
-  text-align: center;
-}
-.download__icon {
-  height: 8rem;
-}
-.download__meta h4 {
-  margin-bottom: 0;
-  line-height: 1.3;
-}
-.send-btn-container a {
-  display: inline-block;
-  font-size: 18px;
-  padding: 8px 40px;
-  margin-top: 15px;
-  background: var(--light-blue);
-  text-decoration: none;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 20px 20px #0000002e;
 }
 
-.send-btn-container a:hover {
-  background: var(--dark-blue);
-}
-
-/* linkedin Icon */
-.linkedin-icon {
-  fill: #131315c9;
-  color: #fff;
-  position: absolute;
-  top: 0;
-  border: 0;
-  right: 0;
-}
-
-/* Landing Page */
-body,
 .drop-zone,
 .upload-container {
   display: flex;
@@ -89,28 +24,10 @@ body,
   flex-direction: column;
 }
 
-.sharing-container {
-  margin-bottom: 25px;
-  width: var(--container-width);
-  border-radius: 10px;
-  display: none;
-}
-body {
-  flex-direction: row;
-}
-
-.upload-container {
-  background: #ffffff;
-  border-radius: 25px;
-  box-shadow: 0px 20px 20px #0000002e;
-}
-
 .drop-zone {
-  width: var(--container-width);
+  width: 400px;
   min-height: 200px;
-  border: 2px dashed var(--border-color);
   margin: 30px;
-  border-radius: 10px;
   transition: all 0.2s;
 }
 
@@ -159,6 +76,13 @@ body {
 .browsebtn {
   color: rgb(219, 49, 63);
   cursor: pointer;
+}
+
+.sharing-container {
+  margin-bottom: 25px;
+  width: var(--container-width);
+  border-radius: 10px;
+  display: none;
 }
 
 .sharing-container p {
@@ -262,22 +186,37 @@ body {
   font-size: 18px;
 }
 
-.upload-vector {
-  background: url(./../img/sharing-article.svg) no-repeat center;
-  background-size: contain;
-  height: 47vh;
-  width: 47vw;
+#share-vector {
+  height: 25vh;
+  width: 25vw;
+}
+/* FOOTER */
+
+.footer {
+  margin-top: auto;
 }
 
-@media screen and (max-width: 900px) {
-  :root {
-    --container-width: 320px;
+/* Download Link Page */
+section.download {
+  background: #fff;
+  border-radius: 25px;
+  box-shadow: 0px 20px 20px 0px #00000017;
+  padding: 2rem;
+  text-align: center;
+}
+.download__icon {
+  height: 8rem;
+}
+
+@media (max-width: 575px) {
+  #share-vector {
+    height: 50%;
+    width: 50%;
   }
-  .upload-vector {
+}
+
+@media (max-width: 370px) {
+  #share-vector {
     display: none;
-  }
-  .email-container .field {
-    flex-direction: column;
-    width: 300px;
   }
 }

@@ -1,28 +1,26 @@
-doctype html
-html
-  head
-      meta(charset='UTF-8')
-      meta(name='viewport' content='width=device-width, initial-scale=1.0')
-      link(rel='stylesheet' href='/css/style.css')
-      link(rel='shortcut icon' type="image/x-icon" href='/favicon.ico')
-      title Share-Fy | #{title}
-  
+include _header
+
+  title Share-Fy | #{title}
+
   body
-    section.download
-      img.download__icon(src='/img/download-sd.svg' alt='share-fy-download')
-
-      if(error)
-        h4= error
-
-      else
-        h2 Your file is ready to download
-        p Link expires in 24 hours
-        .download__meta
-          h4= fileName
-          small #{parseInt(fileSize/1000)} KB
-        .send-btn-container
-          a(href= downloadLink ) Download file
     
-    //- Linkedin Link
-    a(href='https://www.linkedin.com/in/nilesh-kumar-408a91163/' target='_blank'  aria-label='Connect with me')
-      img.linkedin-icon(src='/img/linkedin-icon.svg' alt='share-fy-download')      
+    include _navbar
+    
+    .container.d-flex.justify-content-center.py-5
+      section.download
+        img.download__icon(src='/img/download-sd.svg' alt='share-fy-download')
+
+        if(error)
+          h4= error
+
+        else
+          h3 Your file is ready to download
+          p.text-danger Link expires in 24 hours
+          .download__meta
+            p.lead.text-dark.fs-4 #{parseInt(fileSize/1000)} KB in total
+            h5.text-success= fileName
+          a.btn.btn-primary(href= downloadLink ) Download file
+    
+
+    //- Footer
+    include _footer

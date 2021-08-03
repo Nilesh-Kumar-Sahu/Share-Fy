@@ -1,0 +1,32 @@
+.upload-container
+    .drop-zone
+        .icon-container
+            img.center(src='img/upload.svg' alt='file icon' draggable='false')
+            img.left(src='img/upload.svg' alt='file icon' draggable='false')
+            img.right(src='img/upload.svg' alt='file icon' draggable='false')
+
+        input#fileinput(type='file')
+        .title Drop your files here or 
+            span.browsebtn browse
+
+    .sharing-container
+        p.expire(style='margin-bottom:0') Link expires in 24 hrs!
+        p.expire Copy and share it!
+
+        .input-container
+            input(type='text' value ='' id='fileURL' readonly)
+            img#copyBtn(src='img/copy-icon.svg' alt='copy icon')
+        
+        p or Send via email
+            .email-container
+                form#emailform
+                    .field 
+                        label(for='receiver') Your email
+                        input#sender(type='email' required name='from-email')
+                    .field
+                        label(for='receiver') Receiver's email
+                        input#receiver(type='email' required name='to-email')
+                    
+                    button.sendBtn(type='submit')
+                        i#hide.loading-icon.fa.fa-spinner.fa-spin
+                        span.btn-txt Send
