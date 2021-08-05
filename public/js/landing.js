@@ -1,18 +1,48 @@
 const dropZone = document.querySelector('.drop-zone');
-const browsebtn = document.querySelector('.browsebtn');
+const browseOption = document.querySelector('.browseOption');
 const fileInput = document.querySelector('#fileinput');
 
 const sharingContainer = document.querySelector('.sharing-container');
 const loadingIcon = document.querySelector('.loading-icon');
-const fileURL = document.querySelector('#fileURL');
+const UploadSpinner = document.querySelector('.upload-spinner');
+const fileURLInput = document.querySelector('#fileURL');
 const emailForm = document.querySelector('#emailform');
 const copyBtn = document.querySelector('#copyBtn');
-// const sendBtn = document.querySelector('.sendBtn');
 
-const toast = document.querySelector('.toast');
+// Showing Toast to the user
+const customToast = document.querySelector('.custom-toast');
 
-const host = 'https://share-fy.herokuapp.com/';
-// const host = 'http://127.0.0.1:5000/';
+// Creating _classToast
+class _classToast {
+  constructor() {
+    this.removeTimeout = null;
+    this.el = document.createElement('div');
+    this.el.className = 'show-toast';
+    customToast.appendChild(this.el);
+  }
+
+  show(message, state) {
+    clearTimeout(this.removeTimeout);
+
+    this.el.textContent = message;
+    this.el.className = 'show-toast toast--visible';
+
+    if (state) {
+      this.el.classList.add(`toast--${state}`);
+    }
+
+    this.removeTimeout = setTimeout(() => {
+      this.el.classList.remove('toast--visible');
+    }, 6000);
+  }
+}
+
+// Creating a new Toast obj
+const Toast = new _classToast();
+Toast.show('Welcome 🤗');
+
+// const host = 'https://share-fy.herokuapp.com/';
+const host = 'http://127.0.0.1:5000/';
 
 const uploadURL = `${host}api/files`;
 const emailURL = `${host}api/files/send`;
@@ -33,50 +63,55 @@ dropZone.addEventListener('dragleave', () => {
 dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
   dropZone.classList.remove('dragged');
-  // console.log(e);
-  // console.log(e.dataTransfer.files);
   const files = e.dataTransfer.files;
-  // console.log(files);
 
-  // console.log(fileInput);
   if (files.length != 0) {
-    // console.log(fileInput.files);
-
     fileInput.files = files;
-
-    //upload function defined below
     uploadFile();
   }
 });
 
-browsebtn.addEventListener('click', (e) => {
+browseOption.addEventListener('click', (e) => {
   fileInput.click();
+  resetFileURLInput();
 });
 
-fileinput.addEventListener('change', () => {
+fileInput.addEventListener('change', () => {
   uploadFile();
 });
 
-// sharing container listenrs
+// sharing container listeners
 copyBtn.addEventListener('click', () => {
-  fileURL.select();
+  fileURLInput.select();
   document.execCommand('copy');
-  showToast('Copied to clipboard');
+  Toast.show('Copied to clipboard! 👍', 'success');
 });
 
-// ============================UPLOAD============================
+const resetFileInput = () => {
+  fileInput.value = '';
+};
+
+const resetFileURLInput = () => {
+  fileURLInput.value = '';
+};
+
+// ================UPLOAD================
 const uploadFile = () => {
+  UploadSpinner.style.display = 'block';
+
   // User can upload only one file
   if (fileInput.files.length > 1) {
     resetFileInput();
-    showToast('Upload 1 file only!');
+    Toast.show('Upload 1 file only!', 'error');
+    UploadSpinner.style.display = 'none';
     return;
   }
   const file = fileInput.files[0];
 
   if (file.size > maxAllowedSize) {
-    showToast("Can't upload more than 100MB");
     resetFileInput();
+    Toast.show('Cannot upload file more than 100MB! 😔', 'error');
+    UploadSpinner.style.display = 'none';
     return;
   }
 
@@ -93,39 +128,33 @@ const uploadFile = () => {
   request
     .then((res) => res.json())
     .then((data) => {
+      UploadSpinner.style.display = 'none';
       showLink(data.file);
-      // console.log(data);
     })
     .catch((err) => {
-      showToast(`Error in upload: ${err.status}`);
+      resetFileInput();
+      Toast.show('Sorry, there was a problem in upload! 😔', 'error');
     });
 };
 
+// ================Showing the link================
 const showLink = (url) => {
   resetFileInput(); //remove previous input
-  emailForm[2].removeAttribute('disabled'); //now button is showing
   sharingContainer.style.display = 'block';
-  fileURL.value = url;
+  fileURLInput.value = url;
 };
 
-const resetFileInput = () => {
-  fileinput.value = '';
-};
-
+// ================Submitting email================
 emailForm.addEventListener('submit', (e) => {
   e.preventDefault();
   loadingIcon.removeAttribute('id');
-  // loadingIcon.style.display = 'block';
 
-  const url = fileURL.value;
+  const url = fileURLInput.value;
   const formData = {
     uuid: url.split('/').splice(-1, 1)[0],
     emailTo: emailForm.elements['to-email'].value,
     emailFrom: emailForm.elements['from-email'].value,
   };
-
-  emailForm[2].setAttribute('disabled', 'true');
-  // console.table(formData);
 
   fetch(emailURL, {
     method: 'POST',
@@ -139,21 +168,10 @@ emailForm.addEventListener('submit', (e) => {
       if (data.success) {
         sharingContainer.style.display = 'none';
         loadingIcon.setAttribute('id', 'hide');
-
-        // loadingIcon.style.display = 'none';
-        showToast('Email sent');
+        Toast.show('Email sent successfully! 👍', 'success');
       }
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
-
-let toastTimer;
-const showToast = (msg) => {
-  toast.innerText = msg;
-  toast.style.transform = 'translate(-50%,0)';
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    toast.style.transform = 'translate(-50%,60px)';
-  }, 2000);
-};
-
-// nileshkumar42490@gmail.com

@@ -180,16 +180,36 @@ body {
   display: none;
 }
 
-.toast {
-  position: absolute;
-  bottom: 10px;
-  color: white;
-  transform: translateX(-50%, 60px);
-  padding: 10px 20px;
+.show-toast {
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 300px;
+  height: 30px;
+  background: #212529;
+  color: #ffc107;
+  font-family: sans-serif;
+  text-align: center;
   border-radius: 5px;
-  background: var(--toast-color);
-  transition: transform ease-in-out 0.2s;
-  font-size: 18px;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.7s, visibility 0.7s;
+}
+
+.toast--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.toast--success {
+  background: #55c57a;
+  color: #ffffff;
+}
+
+.toast--error {
+  background: #dc3545;
+  color: #ffffff;
 }
 
 #share-vector {
