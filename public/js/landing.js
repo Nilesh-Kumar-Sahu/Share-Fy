@@ -15,14 +15,14 @@ const customToast = document.querySelector('.custom-toast');
 // Creating _classToast
 class _classToast {
   constructor() {
-    this.removeTimeout = null;
+    this.toastTime = null;
     this.el = document.createElement('div');
     this.el.className = 'show-toast';
     customToast.appendChild(this.el);
   }
 
   show(message, state) {
-    clearTimeout(this.removeTimeout);
+    clearTimeout(this.toastTime);
 
     this.el.textContent = message;
     this.el.className = 'show-toast toast--visible';
@@ -31,7 +31,7 @@ class _classToast {
       this.el.classList.add(`toast--${state}`);
     }
 
-    this.removeTimeout = setTimeout(() => {
+    this.toastTime = setTimeout(() => {
       this.el.classList.remove('toast--visible');
     }, 6000);
   }
@@ -41,6 +41,7 @@ class _classToast {
 const Toast = new _classToast();
 Toast.show('Welcome 🤗');
 
+// const host = 'http://localhost:5000/';
 const host = 'https://share-fy.herokuapp.com/';
 
 const uploadURL = `${host}api/files`;
@@ -128,6 +129,7 @@ const uploadFile = () => {
     .then((res) => res.json())
     .then((data) => {
       UploadSpinner.style.display = 'none';
+      Toast.show('File uploaded successfully! 😄', 'success');
       showLink(data.file);
     })
     .catch((err) => {
